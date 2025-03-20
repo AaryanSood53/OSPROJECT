@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deadlocks in OS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s forwards;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-gray-900 to-gray-800 text-white p-6">
+    
+    <h1 class="text-5xl font-bold fade-in">💻 Understanding Deadlocks in OS</h1>
+    <p class="mt-4 text-lg max-w-2xl text-center fade-in">
+        A deadlock is a situation in which two or more processes are unable to proceed because each is waiting for resources held by the other.
+    </p>
+
+    <div class="mt-8 p-6 bg-gray-800 shadow-lg rounded-xl w-full max-w-2xl fade-in">
+        <h2 class="text-3xl font-bold mb-3">🔹 What is a Deadlock?</h2>
+        <p class="text-gray-300">A deadlock occurs when multiple processes hold some resources and wait indefinitely for other resources held by different processes.</p>
+    </div>
+
+    <div class="mt-8 p-6 bg-gray-800 shadow-lg rounded-xl w-full max-w-2xl fade-in">
+        <h2 class="text-3xl font-bold mb-3">🔹 Necessary Conditions for Deadlock</h2>
+        <ul class="list-disc text-gray-300 ml-6">
+            <li><b>Mutual Exclusion:</b> Resources cannot be shared.</li>
+            <li><b>Hold and Wait:</b> A process holding at least one resource is waiting for more.</li>
+            <li><b>No Preemption:</b> A resource cannot be forcibly taken from a process.</li>
+            <li><b>Circular Wait:</b> A set of processes are waiting on each other in a circular fashion.</li>
+        </ul>
+    </div>
+
+    <div class="mt-8 p-6 bg-gray-800 shadow-lg rounded-xl w-full max-w-2xl fade-in">
+        <h2 class="text-3xl font-bold mb-3">🔹 Methods to Handle Deadlocks</h2>
+        <ul class="list-disc text-gray-300 ml-6">
+            <li><b>Prevention:</b> Ensure at least one necessary condition does not hold.</li>
+            <li><b>Avoidance:</b> Use algorithms like the Banker's algorithm to allocate resources safely.</li>
+            <li><b>Detection:</b> Periodically check for circular wait conditions.</li>
+            <li><b>Recovery:</b> Terminate processes or preempt resources to resolve deadlocks.</li>
+        </ul>
+    </div>
+
+    <div class="mt-8 w-full max-w-2xl space-y-4 fade-in">
+        <button id="homeButton" class="px-8 py-4 bg-purple-500 text-white text-lg rounded-lg shadow-lg hover:bg-purple-600 hover:shadow-xl transition-all w-full">
+            🏠 Go to Homepage
+        </button>
+    </div>
+
+    <script>
+        document.getElementById("homeButton").addEventListener("click", function() {
+            window.location.href = "index.html";
+        });
+    </script>
+    <div class="mt-12 pt-8 border-t border-slate-800 text-center text-slate-500 text-sm">
+        <p>&copy; 2025 DeadlockHub. All rights reserved.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deadlock Escape Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 🔥 Full Background Image */
+        body {
+            background: url('https://img.freepik.com/free-photo/misurina-sunset_181624-34793.jpg?t=st=1742499970~exp=1742503570~hmac=1c7b5740760ddf1c55a9dd6e1baf4f33309f47651967cbefe20a3d7eccb05f02&w=1380') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        /* 🔥 Game Container */
+        .game-container {
+            display: grid;
+            grid-template-columns: repeat(5, 60px);
+            grid-template-rows: repeat(5, 60px);
+            gap: 8px;
+            padding: 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 🔥 Grid Cells */
+        .cell {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            border-radius: 8px;
+            transition: background 0.2s ease-in-out;
+        }
+
+        /* 🔥 Player, Obstacles & Goal */
+        .player { background-color: #10b981; font-weight: bold; }
+        .obstacle { background-color: #dc2626; font-weight: bold; }
+        .goal { background-color: #facc15; font-weight: bold; }
+
+        /* 🔥 Game Instructions */
+        .instructions {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="text-5xl font-extrabold text-white drop-shadow-md">🎮 Deadlock Escape Game</h1>
+    <p class="instructions text-white mt-4">Move the green block (⬜) to the yellow goal (⭐) without hitting obstacles (🚧).</p>
+
+    <!-- 🔥 Game Grid -->
+    <div id="game-board" class="game-container mt-6"></div>
+
+    <p class="instructions text-white mt-4">Use <b>Arrow Keys</b> to move.</p>
+
+    <script src="game.js"></script>
+
+    <div class="mt-12 pt-8 border-t border-slate-800 text-center text-slate-500 text-sm">
+        <p>&copy; 2025 DeadlockHub. All rights reserved.</p>
+    </div>
+</body>
+</html>

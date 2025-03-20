@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deadlock Learning</title>
+    <!-- 🔹 Using Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Fix for input number arrows */
+        input.no-arrows::-webkit-outer-spin-button,
+        input.no-arrows::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input.no-arrows {
+            -moz-appearance: textfield; /* Firefox */
+        }
+
+        /* Fade-in Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-6">
+
+    <!-- Main Container -->
+    <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-3xl md:max-w-2xl lg:max-w-3xl fade-in">
+        <h1 class="text-3xl md:text-4xl font-bold text-center">🔍 Understanding Deadlock</h1>
+        <p class="mt-4 text-lg text-center max-w-lg mx-auto">
+            Deadlock occurs when two or more processes hold resources and wait indefinitely for resources held by others.
+        </p>
+
+        <!-- Input Fields -->
+        <div class="mt-6">
+            <label class="block text-lg font-semibold">🔢 Number of Processes:</label>
+            <input type="number" id="processCount" min="1" max="10" step="1"
+                class="p-3 text-black border rounded-lg w-full text-center no-arrows focus:ring focus:ring-blue-500" 
+                placeholder="Enter processes" oninput="validateInput(this)">
+
+            <label class="block text-lg mt-4 font-semibold">🔢 Number of Resources:</label>
+            <input type="number" id="resourceCount" min="1" max="10" step="1"
+                class="p-3 text-black border rounded-lg w-full text-center no-arrows focus:ring focus:ring-blue-500" 
+                placeholder="Enter resources" oninput="validateInput(this)">
+        </div>
+
+        <!-- Buttons -->
+        <button onclick="showAllocations()" 
+            class="mt-6 px-6 py-3 bg-green-500 text-white text-lg rounded-lg shadow-lg hover:bg-green-600 w-full">
+            🚀 Show Possible Allocations
+        </button>
+
+        <!-- Results -->
+        <div id="result" class="mt-6 text-xl font-semibold text-center"></div>
+
+        <!-- Navigation Buttons -->
+        <div class="mt-6 space-y-4">
+            <button id="homeButton" 
+                class="px-6 py-3 bg-purple-500 text-white text-lg rounded-lg shadow-lg hover:bg-purple-600 w-full">
+                🏠 Go to Homepage
+            </button>
+
+            <button onclick="window.location.href='allocate.html'" 
+                class="px-6 py-3 bg-blue-500 text-white text-lg rounded-lg shadow-lg hover:bg-blue-600 w-full">
+                ⚡ Try Allocating Resources →
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-12 pt-8 border-t border-slate-800 text-center text-slate-500 text-sm w-full">
+        <p>&copy; 2025 DeadlockHub. All rights reserved.</p>
+    </div>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+    <script>
+        function validateInput(input) {
+            let value = parseInt(input.value);
+            if (value < 1) input.value = 1;
+            if (value > 10) input.value = 10;
+        }
+    </script>
+
+</body>
+</html>
