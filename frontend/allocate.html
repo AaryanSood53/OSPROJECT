@@ -1,91 +1,145 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Try Allocating Resources</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <style>
-            /* Remove input arrows from number fields */
-            input.no-arrows::-webkit-outer-spin-button,
-            input.no-arrows::-webkit-inner-spin-button {
-                -webkit-appearance: none;
-                margin: 0;
-            }
-            input.no-arrows {
-                -moz-appearance: textfield; /* Firefox */
-            }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banker's Algorithm Explained</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 to-purple-50 text-gray-800 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-5xl">
+        <!-- Header -->
+        <header class="mb-12 text-center bg-white bg-opacity-70 rounded-xl p-6 shadow-sm">
+            <h1 class="text-4xl md:text-5xl font-bold text-indigo-700 mb-4">The Banker's Algorithm</h1>
+            <p class="text-xl text-gray-600">Understanding Resource Allocation with a Classroom Analogy</p>
+        </header>
 
-            /* Smooth Animations */
-            .fade-in {
-                opacity: 0;
-                transform: translateY(20px);
-                animation: fadeIn 0.8s forwards;
-            }
+        <!-- Main content -->
+        <main>
+            <!-- Introduction -->
+            <section class="mb-12 bg-gradient-to-r from-white to-indigo-50 rounded-lg shadow-md p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-indigo-600 mb-4">The Classroom Scenario</h2>
+                <p class="mb-4">Imagine you're in a classroom, and the teacher has a few notebooks. Different students need these notebooks to complete their assignments, but there aren't enough for everyone at the same time. The teacher's job is to make sure that every student eventually gets their work done without anyone being stuck forever.</p>
+                <div class="bg-indigo-100 p-4 rounded-lg border border-indigo-200">
+                    <p class="font-medium text-indigo-700">Just like a teacher managing limited notebooks wisely, a computer system manages limited resources (like memory, printers, or processors) to ensure that no process gets stuck permanently.</p>
+                </div>
+            </section>
 
-            @keyframes fadeIn {
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-        </style>
-    </head>
-    <body class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-gray-900 to-gray-800 text-white p-6">
+            <!-- Algorithm Steps -->
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-indigo-600 mb-6 bg-white bg-opacity-70 p-4 rounded-lg">How Does the Teacher (Banker) Manage This?</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Step 1 -->
+                    <div class="bg-gradient-to-br from-white to-indigo-50 rounded-lg shadow-md p-6 border-l-4 border-indigo-500 hover:shadow-lg transition-shadow">
+                        <h3 class="text-xl font-bold text-indigo-700 mb-3">1. Ask Before Giving</h3>
+                        <p>If a student (process) needs a certain number of notebooks (resources), they must first tell the teacher how many they might need in total.</p>
+                        <div class="mt-4 bg-white bg-opacity-70 p-3 rounded-md">
+                            <p class="text-sm text-gray-600 italic">In computing: Processes declare their maximum resource needs upfront.</p>
+                        </div>
+                    </div>
 
-        <h1 class="text-5xl font-bold fade-in">🛠️ Allocate Resources</h1>
-        <p class="mt-4 text-lg max-w-2xl text-center fade-in">
-            Now that you understand deadlocks, let's see what happens when you allocate resources manually.
-        </p>
+                    <!-- Step 2 -->
+                    <div class="bg-gradient-to-br from-white to-purple-50 rounded-lg shadow-md p-6 border-l-4 border-indigo-500 hover:shadow-lg transition-shadow">
+                        <h3 class="text-xl font-bold text-indigo-700 mb-3">2. Give What's Safe</h3>
+                        <p>The teacher only gives notebooks if they are sure that, even after lending them, every student will eventually finish their work and return the notebooks.</p>
+                        <div class="mt-4 bg-white bg-opacity-70 p-3 rounded-md">
+                            <p class="text-sm text-gray-600 italic">In computing: Resources are allocated only if the system remains in a safe state.</p>
+                        </div>
+                    </div>
 
-        <!-- Explanation Section -->
-        <div class="mt-8 p-6 bg-gray-800 shadow-lg rounded-xl w-full max-w-2xl fade-in">
-            <h2 class="text-3xl font-bold mb-3">How This Works?</h2>
-            <p class="text-gray-300">🔹 You will enter how many resources each process gets.</p>
-            <p class="text-gray-300">🔹 The system will check if the allocation is safe or if a deadlock occurs.</p>
-            <p class="text-gray-300">🔹 If a deadlock happens, you will get suggestions to fix it.</p>
-        </div>
+                    <!-- Step 3 -->
+                    <div class="bg-gradient-to-br from-white to-purple-50 rounded-lg shadow-md p-6 border-l-4 border-indigo-500 hover:shadow-lg transition-shadow">
+                        <h3 class="text-xl font-bold text-indigo-700 mb-3">3. Wait If Necessary</h3>
+                        <p>If giving notebooks to one student might result in another student being permanently stuck, the teacher makes the first student wait.</p>
+                        <div class="mt-4 bg-white bg-opacity-70 p-3 rounded-md">
+                            <p class="text-sm text-gray-600 italic">In computing: Resource requests that would lead to unsafe states are delayed.</p>
+                        </div>
+                    </div>
 
-        <!-- Input Fields -->
-        <div class="mt-8 w-full max-w-2xl fade-in">
-            <label class="block text-xl font-semibold">🔢 Enter Number of Processes:</label>
-            <input type="number" id="userProcessCount" min="1" class="p-3 text-black border rounded-lg w-full text-center no-arrows focus:ring focus:ring-blue-500">
+                    <!-- Step 4 -->
+                    <div class="bg-gradient-to-br from-white to-indigo-50 rounded-lg shadow-md p-6 border-l-4 border-indigo-500 hover:shadow-lg transition-shadow">
+                        <h3 class="text-xl font-bold text-indigo-700 mb-3">4. Get Notebooks Back</h3>
+                        <p>Once a student finishes their work, they return the notebooks, and the teacher can give them to others.</p>
+                        <div class="mt-4 bg-white bg-opacity-70 p-3 rounded-md">
+                            <p class="text-sm text-gray-600 italic">In computing: Resources are released when processes complete, making them available to others.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-            <label class="block text-xl mt-6 font-semibold">🔢 Enter Number of Resources:</label>
-            <input type="number" id="userResourceCount" min="1" class="p-3 text-black border rounded-lg w-full text-center no-arrows focus:ring focus:ring-blue-500">
+            <!-- Visual Representation -->
+            <section class="mb-12 bg-gradient-to-r from-white to-indigo-100 rounded-lg shadow-md p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-indigo-600 mb-6">Visual Example</h2>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-gray-200">
+                        <thead>
+                            <tr>
+                                <th class="py-3 px-4 bg-indigo-200 text-left">Student</th>
+                                <th class="py-3 px-4 bg-indigo-200 text-left">Max Notebooks Needed</th>
+                                <th class="py-3 px-4 bg-indigo-200 text-left">Currently Has</th>
+                                <th class="py-3 px-4 bg-indigo-200 text-left">Still Needs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-200">
+                                <td class="py-3 px-4 font-medium">Alice</td>
+                                <td class="py-3 px-4">5</td>
+                                <td class="py-3 px-4">2</td>
+                                <td class="py-3 px-4">3</td>
+                            </tr>
+                            <tr class="border-b border-gray-200 bg-indigo-50">
+                                <td class="py-3 px-4 font-medium">Bob</td>
+                                <td class="py-3 px-4">4</td>
+                                <td class="py-3 px-4">1</td>
+                                <td class="py-3 px-4">3</td>
+                            </tr>
+                            <tr class="border-b border-gray-200">
+                                <td class="py-3 px-4 font-medium">Charlie</td>
+                                <td class="py-3 px-4">3</td>
+                                <td class="py-3 px-4">2</td>
+                                <td class="py-3 px-4">1</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="bg-indigo-100">
+                                <td class="py-3 px-4 font-medium">Available Notebooks:</td>
+                                <td class="py-3 px-4 font-medium" colspan="3">3</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                
+                <div class="mt-6 p-4 bg-green-100 border border-green-200 rounded-lg">
+                    <p class="text-green-800">
+                        <span class="font-bold">Safe Sequence Example:</span> The teacher can safely give Charlie 1 more notebook to finish, then collect all 3 back. Then give Bob 3 notebooks to finish, collect all 4 back. Finally, give Alice 3 notebooks to finish.
+                    </p>
+                </div>
+            </section>
 
-            <button id="allocateButton" class="mt-6 px-8 py-4 bg-green-500 text-white text-lg rounded-lg shadow-lg hover:bg-green-600 hover:shadow-xl transition-all w-full">
-                🚀 Proceed to Allocate Resources
-            </button>
-        </div>
+            <!-- Why It's Important -->
+            <section class="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white rounded-lg shadow-md p-6 md:p-8">
+                <h2 class="text-2xl font-bold mb-4">Why Is This Important?</h2>
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-2/3">
+                        <p class="mb-4">This ensures that no student (process) is stuck waiting forever (deadlock). By carefully planning resource allocation, the system can guarantee that all processes will eventually complete.</p>
+                        <p class="font-bold">Banker's Algorithm in Simple Terms:</p>
+                        <p>Just like a teacher managing limited notebooks wisely, a bank (or computer system) manages limited resources (like memory, printers, or processors) to ensure that no one gets stuck permanently.</p>
+                    </div>
+                    <div class="md:w-1/3 mt-6 md:mt-0 flex justify-center">
+                        <div class="w-32 h-32 bg-gradient-to-br from-white to-indigo-100 rounded-full flex items-center justify-center shadow-lg">
+                            <span class="text-indigo-600 text-5xl">🔄</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
 
-        <!-- Allocation Inputs (Generated Dynamically) -->
-        <div id="allocationInputs" class="mt-8 w-full max-w-2xl fade-in"></div>
-
-        <!-- Check Allocation Button -->
-        <button id="checkButton" class="mt-6 px-8 py-4 bg-blue-500 text-white text-lg rounded-lg shadow-lg hover:bg-blue-600 hover:shadow-xl transition-all w-full hidden">
-            ✅ Check Deadlock Status
-        </button>
-
-        <!-- Results -->
-        <div id="allocResult" class="mt-8 text-2xl font-semibold text-center fade-in"></div>
-
-        <!-- Navigation Buttons -->
-        <div class="mt-8 w-full max-w-2xl space-y-4 fade-in">
-            <!-- 🔹 Go to Homepage Button -->
-            <button id="homeButton" class="px-8 py-4 bg-purple-500 text-white text-lg rounded-lg shadow-lg hover:bg-purple-600 hover:shadow-xl transition-all w-full">
-                🏠 Go to Homepage
-            </button>
-
-            <!-- 🔹 Back to Learning Button -->
-            <button id="backButton" class="px-8 py-4 bg-yellow-500 text-black text-lg rounded-lg shadow-lg hover:bg-yellow-600 hover:shadow-xl transition-all w-full">
-                ⬅ Back to Learning
-            </button>
-        </div>
-
-        <script src="script2.js"></script>
-        <div class="mt-12 pt-8 border-t border-slate-800 text-center text-slate-500 text-sm">
-            <p>&copy; 2025 DeadlockHub. All rights reserved.</p>
-        </div>
-    </body>
-    </html>
+        <!-- Footer -->
+        <footer class="mt-12 text-center text-gray-600 text-sm bg-white bg-opacity-70 p-4 rounded-lg">
+            <p>Understanding Operating Systems Concepts - The Banker's Algorithm</p>
+        </footer>
+    </div>
+</body>
+</html>
