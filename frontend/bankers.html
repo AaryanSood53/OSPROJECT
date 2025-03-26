@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banker's Algorithm Visualization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .matrix-cell {
+            width: 50px;
+            height: 40px;
+        }
+        .step-animation {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white flex justify-center items-center min-h-screen p-6">
+    <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-4xl">
+        <h1 class="text-3xl font-bold text-center mb-2">Banker's Algorithm Visualization</h1>
+        <p class="text-lg text-center text-gray-300">A deadlock avoidance algorithm for resource allocation</p>
+
+        <!-- Explanation Section -->
+        <div class="mt-6 p-5 bg-gray-700 rounded-lg">
+            <h2 class="text-xl font-semibold flex items-center">
+                <span class="text-blue-400 mr-2">📚</span> Understanding Banker's Algorithm
+            </h2>
+            <p class="mt-2 text-gray-300">Banker's Algorithm is a deadlock avoidance algorithm that tests for safety by simulating the allocation of predetermined maximum possible amounts of all resources.</p>
+            
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-800 p-4 rounded-lg">
+                    <h3 class="text-lg font-medium text-blue-400">Key Matrices</h3>
+                    <ul class="list-disc mt-2 ml-6 text-gray-300">
+                        <li><span class="font-semibold">Allocation:</span> Resources currently allocated to each process</li>
+                        <li><span class="font-semibold">Max:</span> Maximum resources a process might need</li>
+                        <li><span class="font-semibold">Need:</span> Additional resources a process might request (Max - Allocation)</li>
+                        <li><span class="font-semibold">Available:</span> Resources available in the system</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg">
+                    <h3 class="text-lg font-medium text-blue-400">Algorithm Steps</h3>
+                    <ol class="list-decimal mt-2 ml-6 text-gray-300">
+                        <li>Calculate Need matrix (Max - Allocation)</li>
+                        <li>Find a process whose needs can be satisfied with available resources</li>
+                        <li>Allocate resources to that process</li>
+                        <li>Add the allocated resources back to available when process completes</li>
+                        <li>Repeat until all processes are allocated or no safe sequence exists</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example Section -->
+        <div class="mt-6 p-5 bg-gray-700 rounded-lg">
+            <h2 class="text-xl font-semibold flex items-center">
+                <span class="text-green-400 mr-2">📊</span> Example Scenario
+            </h2>
+            <p class="mt-2 text-gray-300">Consider 3 processes (P0, P1, P2) and 3 resource types (A, B, C):</p>
+            
+            <div class="mt-4 overflow-x-auto">
+                <table class="min-w-full bg-gray-800 rounded-lg overflow-hidden">
+                    <thead>
+                        <tr class="bg-gray-900">
+                            <th class="p-3 text-left">Process</th>
+                            <th class="p-3 text-left">Allocation (A,B,C)</th>
+                            <th class="p-3 text-left">Max (A,B,C)</th>
+                            <th class="p-3 text-left">Need (A,B,C)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-t border-gray-700">
+                            <td class="p-3">P0</td>
+                            <td class="p-3">[0, 1, 0]</td>
+                            <td class="p-3">[7, 5, 3]</td>
+                            <td class="p-3">[7, 4, 3]</td>
+                        </tr>
+                        <tr class="border-t border-gray-700">
+                            <td class="p-3">P1</td>
+                            <td class="p-3">[2, 0, 0]</td>
+                            <td class="p-3">[3, 2, 2]</td>
+                            <td class="p-3">[1, 2, 2]</td>
+                        </tr>
+                        <tr class="border-t border-gray-700">
+                            <td class="p-3">P2</td>
+                            <td class="p-3">[3, 0, 2]</td>
+                            <td class="p-3">[9, 0, 2]</td>
+                            <td class="p-3">[6, 0, 0]</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="mt-4 flex flex-wrap gap-4">
+                <div class="bg-gray-800 p-3 rounded-lg">
+                    <span class="font-semibold text-green-400">Total Resources:</span> [10, 5, 7]
+                </div>
+                <div class="bg-gray-800 p-3 rounded-lg">
+                    <span class="font-semibold text-blue-400">Available Resources:</span> [5, 4, 5]
+                </div>
+                <div class="bg-gray-800 p-3 rounded-lg">
+                    <span class="font-semibold text-purple-400">Safe Sequence:</span> P1 → P0 → P2
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Section -->
+        <div class="mt-6 p-5 bg-gray-700 rounded-lg">
+            <h2 class="text-xl font-semibold flex items-center">
+                <span class="text-purple-400 mr-2">🔧</span> Try It Yourself
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                <div>
+                    <label class="block text-lg font-medium mb-2">Number of Processes:</label>
+                    <input type="number" id="processCount" min="1" max="10" value="3" class="p-3 text-black border rounded-lg w-full text-center bg-gray-100">
+                </div>
+                <div>
+                    <label class="block text-lg font-medium mb-2">Number of Resources:</label>
+                    <input type="number" id="resourceCount" min="1" max="10" value="3" class="p-3 text-black border rounded-lg w-full text-center bg-gray-100">
+                </div>
+            </div>
+            
+            <button onclick="generateInputFields()" class="mt-6 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-lg rounded-lg shadow-lg w-full transition duration-300">
+                Generate Matrices
+            </button>
+        </div>
+
+        <!-- Matrix Input Section -->
+        <div id="matrixInputSection" class="mt-6 p-5 bg-gray-700 rounded-lg hidden">
+            <h2 class="text-xl font-semibold mb-4">Enter Resource Values</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Allocation Matrix -->
+                <div>
+                    <h3 class="text-lg font-medium text-green-400 mb-2">Allocation Matrix</h3>
+                    <p class="text-sm text-gray-300 mb-3">Resources currently allocated to each process</p>
+                    <div id="allocationMatrix" class="bg-gray-800 p-4 rounded-lg"></div>
+                </div>
+                
+                <!-- Max Matrix -->
+                <div>
+                    <h3 class="text-lg font-medium text-red-400 mb-2">Max Matrix</h3>
+                    <p class="text-sm text-gray-300 mb-3">Maximum resources each process might need</p>
+                    <div id="maxMatrix" class="bg-gray-800 p-4 rounded-lg"></div>
+                </div>
+            </div>
+            
+            <!-- Available Resources -->
+            <div class="mt-6">
+                <h3 class="text-lg font-medium text-blue-400 mb-2">Available Resources</h3>
+                <p class="text-sm text-gray-300 mb-3">Resources currently available in the system</p>
+                <div id="availableResources" class="bg-gray-800 p-4 rounded-lg"></div>
+            </div>
+            
+            <button onclick="calculateBankersAlgorithm()" class="mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white text-lg rounded-lg shadow-lg w-full transition duration-300">
+                Run Banker's Algorithm
+            </button>
+        </div>
+
+        <!-- Results Section -->
+        <div id="resultsSection" class="mt-6 p-5 bg-gray-700 rounded-lg hidden">
+            <h2 class="text-xl font-semibold mb-4 flex items-center">
+                <span class="text-yellow-400 mr-2">📋</span> Algorithm Results
+            </h2>
+            
+            <div id="needMatrixContainer" class="mb-6">
+                <h3 class="text-lg font-medium text-yellow-400 mb-2">Need Matrix (Max - Allocation)</h3>
+                <div id="needMatrix" class="bg-gray-800 p-4 rounded-lg"></div>
+            </div>
+            
+            <div id="executionSteps" class="bg-gray-800 p-4 rounded-lg">
+                <h3 class="text-lg font-medium text-green-400 mb-2">Execution Steps</h3>
+                <div id="stepsContainer" class="space-y-2"></div>
+            </div>
+            
+            <div id="safeSequenceContainer" class="mt-6 bg-gray-800 p-4 rounded-lg hidden">
+                <h3 class="text-lg font-medium text-green-400 mb-2">Safe Sequence</h3>
+                <div id="safeSequence" class="text-xl font-bold text-center p-2"></div>
+            </div>
+            
+            <div id="deadlockContainer" class="mt-6 bg-gray-800 p-4 rounded-lg hidden">
+                <h3 class="text-lg font-medium text-red-400 mb-2">Deadlock Detected</h3>
+                <p class="text-center text-red-300">No safe sequence exists with the given resource allocation.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateInputFields() {
+            const processCount = parseInt(document.getElementById("processCount").value);
+            const resourceCount = parseInt(document.getElementById("resourceCount").value);
+            
+            if (processCount < 1 || resourceCount < 1 || processCount > 10 || resourceCount > 10) {
+                alert("Please enter valid numbers between 1 and 10.");
+                return;
+            }
+            
+            // Show the matrix input section
+            document.getElementById("matrixInputSection").classList.remove("hidden");
+            
+            // Generate Allocation Matrix
+            let allocationHTML = '<table class="w-full">';
+            for (let i = 0; i < processCount; i++) {
+                allocationHTML += '<tr>';
+                allocationHTML += `<td class="pr-2 py-1">P${i}</td>`;
+                for (let j = 0; j < resourceCount; j++) {
+                    allocationHTML += `<td class="p-1">
+                        <input type="number" id="alloc-${i}-${j}" min="0" value="0" 
+                        class="matrix-cell p-1 w-full text-black text-center rounded">
+                    </td>`;
+                }
+                allocationHTML += '</tr>';
+            }
+            allocationHTML += '</table>';
+            document.getElementById("allocationMatrix").innerHTML = allocationHTML;
+            
+            // Generate Max Matrix
+            let maxHTML = '<table class="w-full">';
+            for (let i = 0; i < processCount; i++) {
+                maxHTML += '<tr>';
+                maxHTML += `<td class="pr-2 py-1">P${i}</td>`;
+                for (let j = 0; j < resourceCount; j++) {
+                    maxHTML += `<td class="p-1">
+                        <input type="number" id="max-${i}-${j}" min="0" value="0" 
+                        class="matrix-cell p-1 w-full text-black text-center rounded">
+                    </td>`;
+                }
+                maxHTML += '</tr>';
+            }
+            maxHTML += '</table>';
+            document.getElementById("maxMatrix").innerHTML = maxHTML;
+            
+            // Generate Available Resources
+            let availableHTML = '<table class="w-full"><tr>';
+            for (let j = 0; j < resourceCount; j++) {
+                availableHTML += `<td class="p-1">
+                    <div class="text-center mb-1">Resource ${j}</div>
+                    <input type="number" id="avail-${j}" min="0" value="0" 
+                    class="matrix-cell p-1 w-full text-black text-center rounded">
+                </td>`;
+            }
+            availableHTML += '</tr></table>';
+            document.getElementById("availableResources").innerHTML = availableHTML;
+        }
+        
+        function calculateBankersAlgorithm() {
+            const processCount = parseInt(document.getElementById("processCount").value);
+            const resourceCount = parseInt(document.getElementById("resourceCount").value);
+            
+            // Collect data from input fields
+            let allocation = [];
+            let maxMatrix = [];
+            let available = [];
+            
+            for (let i = 0; i < processCount; i++) {
+                allocation.push([]);
+                maxMatrix.push([]);
+                for (let j = 0; j < resourceCount; j++) {
+                    allocation[i].push(parseInt(document.getElementById(`alloc-${i}-${j}`).value) || 0);
+                    maxMatrix[i].push(parseInt(document.getElementById(`max-${i}-${j}`).value) || 0);
+                }
+            }
+            
+            for (let j = 0; j < resourceCount; j++) {
+                available.push(parseInt(document.getElementById(`avail-${j}`).value) || 0);
+            }
+            
+            // Send data to server
+            fetch('http://localhost:3000/bankers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    allocation,
+                    maxMatrix,
+                    available,
+                    processCount,
+                    resourceCount
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                displayResults(data, processCount, resourceCount, allocation, maxMatrix);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while processing the algorithm. Please check the console for details.');
+            });
+        }
+        
+        function displayResults(data, processCount, resourceCount, allocation, maxMatrix) {
+            // Show results section
+            document.getElementById("resultsSection").classList.remove("hidden");
+            
+            // Display Need Matrix
+            let needHTML = '<table class="w-full">';
+            for (let i = 0; i < processCount; i++) {
+                needHTML += '<tr>';
+                needHTML += `<td class="pr-2 py-1 font-medium">P${i}</td>`;
+                for (let j = 0; j < resourceCount; j++) {
+                    const needValue = data.needMatrix[i][j];
+                    needHTML += `<td class="p-1 text-center">${needValue}</td>`;
+                }
+                needHTML += '</tr>';
+            }
+            needHTML += '</table>';
+            document.getElementById("needMatrix").innerHTML = needHTML;
+            
+            // Display execution steps
+            const stepsContainer = document.getElementById("stepsContainer");
+            stepsContainer.innerHTML = '';
+            
+            data.steps.forEach((step, index) => {
+                const stepElement = document.createElement('div');
+                stepElement.className = 'p-2 rounded step-animation';
+                stepElement.style.animationDelay = `${index * 0.1}s`;
+                
+                if (step.type === 'info') {
+                    stepElement.className += ' bg-gray-700';
+                    stepElement.innerHTML = `<span class="text-blue-300">ℹ️ ${step.message}</span>`;
+                } else if (step.type === 'success') {
+                    stepElement.className += ' bg-green-900 bg-opacity-30';
+                    stepElement.innerHTML = `<span class="text-green-300">✅ ${step.message}</span>`;
+                } else if (step.type === 'error') {
+                    stepElement.className += ' bg-red-900 bg-opacity-30';
+                    stepElement.innerHTML = `<span class="text-red-300">❌ ${step.message}</span>`;
+                } else if (step.type === 'resource') {
+                    stepElement.className += ' bg-purple-900 bg-opacity-30';
+                    stepElement.innerHTML = `<span class="text-purple-300">🔄 ${step.message}</span>`;
+                }
+                
+                stepsContainer.appendChild(stepElement);
+            });
+            
+            // Display safe sequence or deadlock message
+            if (data.isSafe) {
+                document.getElementById("safeSequenceContainer").classList.remove("hidden");
+                document.getElementById("deadlockContainer").classList.add("hidden");
+                
+                const sequence = data.safeSequence.map(p => `P${p}`).join(' → ');
+                document.getElementById("safeSequence").innerHTML = sequence;
+            } else {
+                document.getElementById("safeSequenceContainer").classList.add("hidden");
+                document.getElementById("deadlockContainer").classList.remove("hidden");
+            }
+            
+            // Scroll to results
+            document.getElementById("resultsSection").scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
+
