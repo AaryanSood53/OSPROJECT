@@ -1,33 +1,96 @@
-# 🛑 DEADLOCK (OS Assignment)  
+# DEADLOCK
 
-🚀 **Live Demo:** [deadlock-mu.vercel.app](https://deadlock-mu.vercel.app/index.html)  
+**DEADLOCK** is a web application that demonstrates the implementation of the Banker's Algorithm for deadlock avoidance in operating systems.
 
-## 📌 Project Overview  
-This project is an **Operating System (OS) assignment** demonstrating **deadlock concepts** in resource allocation and process synchronization. It visually represents **deadlock scenarios** and provides insights into handling them in operating systems.  
+## 🚀 Live Demo
 
-## 🛠️ Technologies Used  
-- **Frontend:** HTML, CSS, JavaScript  
-- **Hosting:** [Vercel](https://vercel.com/)  
+🔗 **Frontend**: [DEADLOCK App](https://deadlock-mu.vercel.app/index.html)  
+🔗 **Backend API**: [Banker's Algorithm API](https://backfordeadlock.vercel.app/api/bankers)
 
-## 📂 Folder Structure  
-DEADLOCK/ │── frontend/ # Frontend source code │ ├── index.html # Main HTML file │ ├── style.css # CSS styles │ ├── script.js # JavaScript logic (if applicable) │── .gitignore # Git ignored files │── .vercel/ # Vercel deployment settings │── README.md # Project documentation
+---
 
+## 📌 Features
+- Step-by-step execution of Banker's Algorithm
+- Safe state detection with process execution order
+- Handles deadlock detection and prevention
+- Intuitive UI for entering allocation, maximum, and available resources
 
-To run the project locally, follow these steps:  
+---
 
-1️⃣ **Clone the repository:**  
-   ```bash
-   git clone https://github.com/your-username/deadlock.git
-cd deadlock/frontend
+## 🛠️ Installation & Setup
 
-🌟 Features
-✅ Interactive representation of deadlock
-✅ Simple and intuitive UI
-✅ Hosted on Vercel for easy access
+### Clone the Repository
+```sh
+git clone https://github.com/Akhand0ps/DEADLOCK.git
+cd DEADLOCK
+```
 
-📢 Contribution
-This was an academic assignment, but you’re welcome to fork the repository and experiment.
+### Install Dependencies
+```sh
+npm install
+```
 
-📜 License
-This project is for educational purposes only.
+### Run Locally
+```sh
+npm start
+```
+
+---
+
+## ⚙️ Backend API
+
+The backend API processes the Banker's Algorithm and determines whether a system is in a safe state.
+
+### 📁 Backend Repository
+🔗 **[Backend Source Code](https://github.com/Akhand0ps/BackendForDeadlock)**
+
+### 🖥️ Local Setup for Backend
+```sh
+git clone https://github.com/Akhand0ps/BackendForDeadlock.git
+cd BackendForDeadlock
+npm install
+node server.js
+```
+
+### 📌 API Endpoint
+- **POST** `/api/bankers` → Accepts allocation, max, and available resources, returns safe sequence or deadlock detection.
+
+Example Request:
+```json
+{
+  "allocation": [[0, 1, 0], [2, 0, 0], [3, 0, 2]],
+  "maxMatrix": [[7, 5, 3], [3, 2, 2], [9, 0, 2]],
+  "available": [3, 3, 2],
+  "processCount": 3,
+  "resourceCount": 3
+}
+```
+
+Example Response (Safe State):
+```json
+{
+  "isSafe": true,
+  "safeSequence": [1, 2, 0],
+  "steps": ["Process P1 executed...", "Process P2 executed...", "Process P0 executed..."]
+}
+```
+
+Example Response (Deadlock Detected):
+```json
+{
+  "isSafe": false,
+  "steps": ["No process can be executed. Deadlock detected!"]
+}
+```
+
+---
+
+## 📜 License
+This project is open-source and available under the MIT License.
+
+---
+
+## ✨ Author
+Developed by **Akhand Pratap Singh**  
+🔗 **GitHub**: [Akhand0ps](https://github.com/Akhand0ps)
 
