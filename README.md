@@ -5,7 +5,6 @@
 ## 🚀 Live Demo
 
 🔗 **Frontend**: [DEADLOCK App](https://deadlock-mu.vercel.app/index.html)  
-🔗 **Backend API**: [Banker's Algorithm API](https://backfordeadlock.vercel.app/api/bankers)
 
 ---
 
