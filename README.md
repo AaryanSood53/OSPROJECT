@@ -18,15 +18,7 @@
 
 ## 🛠️ Installation & Setup
 
-### Clone the Repository
-```sh
-git clone https://github.com/Akhand0ps/DEADLOCK.git
-cd DEADLOCK
-```
 
-### Install Dependencies
-```sh
-npm install
 ```
 
 ### Run Locally
@@ -38,14 +30,11 @@ npm start
 
 ## ⚙️ Backend API
 
-The backend API processes the Banker's Algorithm and determines whether a system is in a safe state.
-
-### 📁 Backend Repository
-🔗 **[Backend Source Code](https://github.com/Akhand0ps/BackendForDeadlock)**
+The backend API processes the Banker's Algorithm and determines whether a system is in a safe state
 
 ### 🖥️ Local Setup for Backend
 ```sh
-git clone https://github.com/Akhand0ps/BackendForDeadlock.git
+
 cd BackendForDeadlock
 npm install
 node server.js
@@ -90,6 +79,5 @@ This project is open-source and available under the MIT License.
 ---
 
 ## ✨ Author
-Developed by **Akhand Pratap Singh**  
-🔗 **GitHub**: [Akhand0ps](https://github.com/Akhand0ps)
+Developed by **Aaryan Sood** )
 
